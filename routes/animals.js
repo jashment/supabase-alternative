@@ -9,7 +9,7 @@ const supabase = createClient(process.env.SUPABASE_URL, process.env.ANON_KEY)
 
 router.get('/all', async(req, res, next) => {
 const { data, error } = await supabase
-    .from('Play')
+    .from(process.env.SUPABASE_TABLE)
     .select()
     
     if (error) {
@@ -20,23 +20,31 @@ const { data, error } = await supabase
     next()
 })
 
-router.post('/add', async (req, res, next) => {
-const { data, error } = await supabase
-  .from('Play')
-  .insert([
-      {
-          name: 'Lion',
-          description: 'King of the Savanna',
-          url: 'https://images.pexels.com/photos/1106452/pexels-photo-1106452.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-          emotion: 'Angry',
-          genus: 'Panthera',
-      }
-  ])
+router.post('/create', async (req, res, next) => {
+    const { data, error } = await supabase
+    .from(process.env.SUPABASE_TABLE)
+    .insert([
+        {
+            name: req.body.name,
+            description: req.body.description,
+            url: req.body.url,
+            emotion: req.body.emotion,
+            genus: req.body.genus,
+        }
+    ])
     if (error) {
         console.log(error)
+        res.sendStatus(500)
     } else {
         console.log(data)
+        res.sendStatus(200)
     }
+})
+
+router.get(':id', async (req, res, next) => {
+    const { data, error } = await supabase
+        .from(SUPABASE_TABLE)
+        .select(req.params.id)
 })
 
 module.exports = router
