@@ -32,19 +32,48 @@ router.post('/create', async (req, res, next) => {
             genus: req.body.genus,
         }
     ])
-    if (error) {
+    if (data) {
         console.log(error)
-        res.sendStatus(500)
-    } else {
-        console.log(data)
         res.sendStatus(200)
+    } else {
+        res.sendStatus(500)
     }
 })
 
-router.get(':id', async (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
     const { data, error } = await supabase
-        .from(SUPABASE_TABLE)
-        .select(req.params.id)
+        .from(process.env.SUPABASE_TABLE)
+        .select()
+        .eq('id', req.params.id)
+    if (data) {
+        res.send(data)
+    } else {
+        console.log(error)
+        res.send(error).status(500)
+    }
+})
+
+router.put('/:id/update', async (req, res, next) => {
+    const { data, error } = await supabase
+        .from(process.env.SUPABASE_TABLE)
+        .update({
+            name: req.body.name,
+            description: req.body.description,
+            url: req.body.url,
+            emotion: req.body.emotion,
+            genus: req.body.genus,
+        })
+        .eq('id', req.params.id)
+    if (data) {
+        res.send('Animal Updated', data)
+    } else {
+        console.log(error)
+        res.send(error).status(500)
+    }
+})
+
+router.delete('/:id/delete', async (req, res, next) => {
+    
 })
 
 module.exports = router
