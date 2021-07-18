@@ -73,7 +73,16 @@ router.put('/:id/update', async (req, res, next) => {
 })
 
 router.delete('/:id/delete', async (req, res, next) => {
-    
+    const { data, error } = await supabase
+        .from(process.env.SUPABASE_TABLE)
+        .delete()
+        .eq('id', req.params.id)
+    if (data) {
+        res.sendStatus(200)
+    } else {
+        console.log(error)
+        res.send(error).status(500)
+    }
 })
 
 module.exports = router
