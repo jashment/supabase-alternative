@@ -15,7 +15,6 @@ const { data, error } = await supabase
     if (error) {
         console.log('Error', error)
     } else {
-        console.log(data)
         res.send(data)
     }
 })
