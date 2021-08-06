@@ -27,8 +27,6 @@ router.post('/create', async (req, res, next) => {
             name: req.body.name,
             description: req.body.description,
             url: req.body.url,
-            emotion: req.body.emotion,
-            genus: req.body.genus,
         }
     ])
     if (data) {
@@ -59,8 +57,6 @@ router.put('/:id/update', async (req, res, next) => {
             name: req.body.name,
             description: req.body.description,
             url: req.body.url,
-            emotion: req.body.emotion,
-            genus: req.body.genus,
         })
         .eq('id', req.params.id)
     if (data) {
