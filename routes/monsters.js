@@ -13,11 +13,11 @@ const { data, error } = await supabase
     .select()
     
     if (error) {
-        console.log(error)
+        console.log('Error', error)
     } else {
+        console.log(data)
         res.send(data)
     }
-    next()
 })
 
 router.post('/create', async (req, res, next) => {
@@ -65,7 +65,7 @@ router.put('/:id/update', async (req, res, next) => {
         })
         .eq('id', req.params.id)
     if (data) {
-        res.send('Animal Updated', data)
+        res.send('Monster Updated', data)
     } else {
         console.log(error)
         res.send(error).status(500)
