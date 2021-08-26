@@ -1,5 +1,6 @@
 const express = require('express')
 const monster = require('./routes/monsters')
+const places = require('./routes/places')
 const cors = require('cors')
 
 
@@ -18,6 +19,7 @@ app.use(express.urlencoded({extended: false}))
 app.use(cors(corsOptions))
 
 app.use('/monsters', monster)
+app.use('/places', places)
 
 const port = process.env.PORT || 3000
 
